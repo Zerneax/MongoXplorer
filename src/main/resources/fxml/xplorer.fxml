@@ -18,31 +18,38 @@
     </columnConstraints>
 
     <rowConstraints>
-        <RowConstraints percentHeight="5"></RowConstraints>
+        <RowConstraints percentHeight="8" vgrow="ALWAYS"></RowConstraints>
         <RowConstraints percentHeight="95"></RowConstraints>
     </rowConstraints>
 
-    <HBox fx:id="banner" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" spacing="10">
-        <Label text="host">
+    <GridPane fx:id="banner" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0">
+        <HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <Label text="host">
+                <font>
+                    <Font name="Arial" size="16"></Font>
+                </font>
+            </Label>
+            <TextField fx:id="hostField" text=""></TextField>
+            <Label text="port">
+                <font>
+                    <Font name="Arial" size="16"></Font>
+                </font>
+            </Label>
+            <TextField fx:id="portField" text=""></TextField>
+            <Button fx:id="btnConnect" text="connect" onAction="#connect"></Button>
+            <padding>
+                <Insets top="5"></Insets>
+            </padding>
+        </HBox>
+        <Label fx:id="bannerError" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="1">
             <font>
-                <Font name="Arial" size="16"></Font>
+                <Font name="Arial" size="10"></Font>
             </font>
         </Label>
-        <TextField text=""></TextField>
-        <Label text="port">
-            <font>
-                <Font name="Arial" size="16"></Font>
-            </font>
-        </Label>
-        <TextField text=""></TextField>
-        <Button fx:id="btnConnect" text="connect"></Button>
-        <GridPane.margin>
-            <Insets top="5"></Insets>
-        </GridPane.margin>
-    </HBox>
+    </GridPane>
 
     <VBox fx:id="panelLeft" GridPane.columnIndex="0" GridPane.rowIndex="1">
-        <Label text="TestGauche"></Label>
+        <Label text="testGauche"></Label>
         <padding>
             <Insets top="5" left="2"></Insets>
         </padding>

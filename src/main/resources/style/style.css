@@ -1,5 +1,5 @@
 #banner {
-    -fx-border-width: 0 0 1 0;
+    -fx-border-width: 0 0 2 0;
     -fx-border-style: solid;
     -fx-border-color: #539bad;
     -fx-background-radius: 6;
@@ -7,7 +7,7 @@
 }
 
 #panelLeft {
-    -fx-border-width: 0 1 0 0;
+    -fx-border-width: 0 2 0 0;
     -fx-border-style: solid;
     -fx-border-color: #539bad;
     -fx-background-radius: 6;
@@ -32,4 +32,8 @@
 
 #btnConnect {
     -fx-cursor: hand;
+}
+
+#bannerError {
+    -fx-text-fill: red;
 }
