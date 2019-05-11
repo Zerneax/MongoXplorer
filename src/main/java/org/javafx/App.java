@@ -18,9 +18,12 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("xplorer"));
+        String test = this.getClass().getResource("/style/style.css").toExternalForm();
+        scene.getStylesheets().add(test);
         stage.setScene(scene);
         stage.setMinWidth(1000);
         stage.setMinHeight(700);
+        stage.setTitle("Mongo Xplorer");
         stage.show();
     }
 
@@ -29,7 +32,7 @@ public class App extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/org/javafx/fxml/" + fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/fxml/" + fxml + ".fxml"));
         return fxmlLoader.load();
     }
 

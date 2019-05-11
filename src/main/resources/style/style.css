@@ -1,0 +1,35 @@
+#banner {
+    -fx-border-width: 0 0 1 0;
+    -fx-border-style: solid;
+    -fx-border-color: #539bad;
+    -fx-background-radius: 6;
+    -fx-border-radius: 2;
+}
+
+#panelLeft {
+    -fx-border-width: 0 1 0 0;
+    -fx-border-style: solid;
+    -fx-border-color: #539bad;
+    -fx-background-radius: 6;
+    -fx-border-radius: 2;
+}
+
+#gridpane {
+    -fx-background-color: #ebd8ff;
+}
+
+.label {
+    -fx-text-fill: gray;
+}
+
+#visualize {
+    -fx-background-color: #ebd8ff;
+}
+
+.text-area .content{
+    -fx-background-color: #ebd8ff;
+}
+
+#btnConnect {
+    -fx-cursor: hand;
+}
