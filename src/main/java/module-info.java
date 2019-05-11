@@ -4,4 +4,5 @@ module org.javafx {
 
     opens org.javafx to javafx.fxml;
     exports org.javafx;
+    exports org.javafx.controller;
 }

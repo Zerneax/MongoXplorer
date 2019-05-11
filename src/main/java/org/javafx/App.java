@@ -17,8 +17,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"));
+        scene = new Scene(loadFXML("xplorer"));
         stage.setScene(scene);
+        stage.setMinWidth(1000);
+        stage.setMinHeight(700);
         stage.show();
     }
 
@@ -27,7 +29,7 @@ public class App extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/org/javafx/fxml/" + fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
