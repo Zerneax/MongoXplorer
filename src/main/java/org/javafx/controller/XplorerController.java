@@ -5,6 +5,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import org.javafx.process.MongoProcess;
+
+import java.util.List;
 
 public class XplorerController {
 
@@ -24,7 +28,12 @@ public class XplorerController {
     private Label bannerError;
 
     @FXML
+    private VBox test;
+
+    @FXML
     private TextArea visualize;
+
+    private MongoProcess mongoProcess;
 
     @FXML
     protected void connect(ActionEvent event) {
@@ -43,14 +52,25 @@ public class XplorerController {
             return;
         }
 
-        for(int i = 0; i < 100; i ++) {
-            this.visualize.setText(this.visualize.getText() + "\n Test" );
-        }
 
         //this.visualize.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+        this.mongoProcess = new MongoProcess(this.hostField.getText(), Integer.parseInt(this.portField.getText()));
 
-        Region contentTextArea = (Region) this.visualize.lookup(".content");
-        contentTextArea.setStyle("-fx-background-color: white;");
+        List<String> collectionsNames = this.mongoProcess.getAllCollectionNames();
+
+        for(String collectionName: collectionsNames) {
+            this.test.getChildren().add(new Label(collectionName));
+        }
+        this.test.setVisible(true);
+
+        List<String> documents = this.mongoProcess.getAllEntriesOfCollection();
+        for(String document: documents) {
+            this.visualize.setText(this.visualize.getText() + document + "\n");
+        }
+        this.visualize.setVisible(true);
+
+        //Region contentTextArea = (Region) this.visualize.lookup(".content");
+        //contentTextArea.setStyle("-fx-background-color: white;");
     }
 
     @FXML

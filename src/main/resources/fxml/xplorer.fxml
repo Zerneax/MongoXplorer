@@ -11,6 +11,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
 <GridPane fx:id="gridpane" fx:controller="org.javafx.controller.XplorerController" xmlns:fx="http://javafx.com/fxml" gridLinesVisible="false">
     <columnConstraints>
         <ColumnConstraints percentWidth="20"></ColumnConstraints>
@@ -58,14 +59,16 @@
         </Label>
     </GridPane>
 
-    <VBox fx:id="panelLeft" GridPane.columnIndex="0" GridPane.rowIndex="1">
-        <Label text="testGauche"></Label>
+    <BorderPane fx:id="panelLeft" GridPane.columnIndex="0" GridPane.rowIndex="1">
+        <center>
+            <VBox fx:id="test" BorderPane.alignment="CENTER" visible="false"></VBox>
+        </center>
         <padding>
-            <Insets top="5" left="2"></Insets>
+            <Insets top="1" left="1" right="1" bottom="1"></Insets>
         </padding>
-    </VBox>
+    </BorderPane>
 
-    <TextArea fx:id="visualize" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" text="Test">
+    <TextArea fx:id="visualize" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" visible="false">
         <GridPane.margin>
             <Insets left="1" top="1"></Insets>
         </GridPane.margin>
