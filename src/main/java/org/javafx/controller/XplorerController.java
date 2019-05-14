@@ -1,15 +1,10 @@
 package org.javafx.controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 public class XplorerController {
 
@@ -21,6 +16,9 @@ public class XplorerController {
 
     @FXML
     private Button btnConnect;
+
+    @FXML
+    private Button btnExit;
 
     @FXML
     private Label bannerError;
@@ -53,6 +51,11 @@ public class XplorerController {
 
         Region contentTextArea = (Region) this.visualize.lookup(".content");
         contentTextArea.setStyle("-fx-background-color: white;");
+    }
+
+    @FXML
+    protected void exit(ActionEvent event) {
+        Platform.exit();
     }
 
     private void showAlert(String message) {
