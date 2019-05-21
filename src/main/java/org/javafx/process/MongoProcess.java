@@ -15,9 +15,9 @@ public class MongoProcess {
     private MongoClient mongoClient;
     private MongoDatabase mongoDatabase;
 
-    public MongoProcess(String host, int port) {
+    public MongoProcess(String host, int port, String database) {
         this.mongoClient = new MongoClient(host, port);
-        this.mongoDatabase = this.mongoClient.getDatabase("test");
+        this.mongoDatabase = this.mongoClient.getDatabase(database);
     }
 
     public List<String> getAllCollectionNames() {
@@ -29,8 +29,8 @@ public class MongoProcess {
         return collectionsNames;
     }
 
-    public List<String> getAllEntriesOfCollection() {
-        MongoCollection mongoCollection = this.mongoDatabase.getCollection("personne");
+    public List<String> getAllEntriesOfCollection(String collection) {
+        MongoCollection mongoCollection = this.mongoDatabase.getCollection(collection);
         FindIterable<Document> findIterable = mongoCollection.find();
         List<String> documents = new ArrayList<>();
         for(Document doc: findIterable) {

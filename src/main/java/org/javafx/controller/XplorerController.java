@@ -19,6 +19,9 @@ public class XplorerController {
     private TextField portField;
 
     @FXML
+    private TextField databaseField;
+
+    @FXML
     private Button btnConnect;
 
     @FXML
@@ -52,22 +55,36 @@ public class XplorerController {
             return;
         }
 
+        if(this.databaseField.getText().isEmpty()) {
+            //showAlert("The Port is empty !");
+            this.bannerError.setText("The Database name is empty !");
+            this.bannerError.setVisible(true);
+            return;
+        }
+
 
         //this.visualize.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-        this.mongoProcess = new MongoProcess(this.hostField.getText(), Integer.parseInt(this.portField.getText()));
+        this.mongoProcess = new MongoProcess(this.hostField.getText(), Integer.parseInt(this.portField.getText()), this.databaseField.getText());
 
         List<String> collectionsNames = this.mongoProcess.getAllCollectionNames();
 
         for(String collectionName: collectionsNames) {
-            this.test.getChildren().add(new Label(collectionName));
+            Label label = new Label(collectionName);
+            label.setOnMouseClicked(clickEvent -> {
+                this.visualize.setText("");
+                List<String> documents = this.mongoProcess.getAllEntriesOfCollection(label.getText());
+                for(String document: documents) {
+                    this.visualize.setText(this.visualize.getText() + document + "\n");
+                }
+                this.visualize.setVisible(true);
+
+            });
+
+            this.test.getChildren().add(label);
         }
         this.test.setVisible(true);
 
-        List<String> documents = this.mongoProcess.getAllEntriesOfCollection();
-        for(String document: documents) {
-            this.visualize.setText(this.visualize.getText() + document + "\n");
-        }
-        this.visualize.setVisible(true);
+
 
         //Region contentTextArea = (Region) this.visualize.lookup(".content");
         //contentTextArea.setStyle("-fx-background-color: white;");

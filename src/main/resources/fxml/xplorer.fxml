@@ -41,6 +41,12 @@
                 </font>
             </Label>
             <TextField fx:id="portField" text=""></TextField>
+            <Label text="database">
+                <font>
+                    <Font name="Arial" size="16"></Font>
+                </font>
+            </Label>
+            <TextField fx:id="databaseField" text=""></TextField>
             <Button fx:id="btnConnect" text="connect" onAction="#connect"></Button>
             <padding>
                 <Insets top="5"></Insets>
