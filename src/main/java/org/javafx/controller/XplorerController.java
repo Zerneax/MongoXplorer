@@ -65,7 +65,7 @@ public class XplorerController {
 
         List<String> documents = this.mongoProcess.getAllEntriesOfCollection();
         for(String document: documents) {
-            this.visualize.setText(this.visualize.getText() + document + "\n");
+            this.visualize.setText(this.visualize.getText() + renderJson(document) + ",\n");
         }
         this.visualize.setVisible(true);
 
@@ -85,5 +85,37 @@ public class XplorerController {
         alert.setContentText(message);
         //alert.initOwner(this.btnConnect.getScene().getWindow());
         alert.showAndWait();
+    }
+
+    private String renderJson(String json) {
+        int openBracket = 0;
+        int closeBracket = 0;
+        String newJson = "";
+
+        for(int i = 0; i < json.length(); i ++) {
+            if('{' == json.charAt(i) || '[' == json.charAt(i)) {
+                openBracket ++;
+                newJson = newJson + json.charAt(i) + "\n";
+                for(int j = 0; j < openBracket; j++ ) {
+                    newJson = newJson + "\t";
+                }
+            } else if('}' == json.charAt(i) || ']' == json.charAt(i)) {
+                newJson = newJson + "\n";
+                openBracket --;
+                for(int j = 0; j < openBracket; j++ ) {
+                    newJson = newJson + "\t";
+                }
+                newJson = newJson + json.charAt(i);
+            } else if( ',' == json.charAt(i)) {
+                newJson = newJson + ",\n";
+                for(int j = 0; j < openBracket; j++ ) {
+                    newJson = newJson + "\t";
+                }
+            } else {
+                newJson = newJson + json.charAt(i);
+            }
+        }
+
+        return newJson;
     }
 }
