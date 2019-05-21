@@ -74,6 +74,16 @@
         </padding>
     </BorderPane>
 
+    <BorderPane fx:id="nothing" GridPane.columnIndex="1" GridPane.rowIndex="1" visible="true">
+        <center>
+            <Label fx:id="nothingLabel" text="Connect to Mongo database and explore it.">
+                <font>
+                    <Font name="Arial" size="18"></Font>
+                </font>
+            </Label>
+        </center>
+    </BorderPane>
+
     <TextArea fx:id="visualize" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" visible="false">
         <GridPane.margin>
             <Insets left="1" top="1"></Insets>

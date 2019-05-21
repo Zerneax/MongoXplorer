@@ -1,17 +1,15 @@
 #banner {
+    -fx-background-color: #659EC7;
     -fx-border-width: 0 0 2 0;
     -fx-border-style: solid;
-    -fx-border-color: #539bad;
-    -fx-background-radius: 6;
-    -fx-border-radius: 2;
+    -fx-border-color: #151B54;
 }
 
 #panelLeft {
+    -fx-background-color: #4863A0;
     -fx-border-width: 0 2 0 0;
     -fx-border-style: solid;
-    -fx-border-color: #539bad;
-    -fx-background-radius: 6;
-    -fx-border-radius: 2;
+    -fx-border-color: #151B54;
 }
 
 #test {
@@ -23,11 +21,22 @@
 }
 
 #gridpane {
-    -fx-background-color: #ebd8ff;
+
 }
 
 .label {
-    -fx-text-fill: gray;
+    -fx-text-fill: white;
+}
+
+.text-field {
+    -fx-border-width: 1 1 1 1;
+    -fx-border-style: solid;
+    -fx-border-radius: 2;
+    -fx-border-color: #4863A0;
+}
+
+#nothingLabel {
+    -fx-text-fill: #2B3856;
 }
 
 #visualize {
@@ -43,10 +52,15 @@
     -fx-border-radius: 2;
 }
 
+.button {
+    -fx-background-color: #4863A0;
+    -fx-text-fill: white;
+}
+
 #btnConnect {
     -fx-cursor: hand;
 }
 
 #bannerError {
-    -fx-text-fill: red;
+    -fx-text-fill: #9F000F;
 }

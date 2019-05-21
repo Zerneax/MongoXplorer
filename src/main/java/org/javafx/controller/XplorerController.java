@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import org.javafx.process.MongoProcess;
@@ -36,6 +37,12 @@ public class XplorerController {
     @FXML
     private TextArea visualize;
 
+    @FXML
+    private BorderPane nothing;
+
+    @FXML
+    private Label nothingLabel;
+
     private MongoProcess mongoProcess;
 
     @FXML
@@ -65,18 +72,29 @@ public class XplorerController {
 
         //this.visualize.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         this.mongoProcess = new MongoProcess(this.hostField.getText(), Integer.parseInt(this.portField.getText()), this.databaseField.getText());
+        this.nothingLabel.setText("Select a collection on the left to see the content.");
 
         List<String> collectionsNames = this.mongoProcess.getAllCollectionNames();
 
         for(String collectionName: collectionsNames) {
             Label label = new Label(collectionName);
             label.setOnMouseClicked(clickEvent -> {
-                this.visualize.setText("");
+                this.visualize.clear();
                 List<String> documents = this.mongoProcess.getAllEntriesOfCollection(label.getText());
-                for(String document: documents) {
-                    this.visualize.setText(this.visualize.getText() + renderJson(document) + "\n");
+                System.out.println("nb documents " + documents.size());
+                if(documents.size() > 0) {
+                    for(String document: documents) {
+                        this.visualize.setText(document + "\n");
+                    }
+
+                    this.visualize.setVisible(true);
+                    this.nothing.setVisible(false);
+                } else {
+                    this.visualize.setVisible(false);
+                    this.nothing.setVisible(true);
+                    this.nothingLabel.setText("This collection is empty !");
                 }
-                this.visualize.setVisible(true);
+
 
             });
 
