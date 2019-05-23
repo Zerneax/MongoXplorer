@@ -31,19 +31,19 @@
         <HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="0">
             <Label text="host">
                 <font>
-                    <Font name="Arial" size="16"></Font>
+                    <Font name="Rockwell" size="16"></Font>
                 </font>
             </Label>
             <TextField fx:id="hostField" text=""></TextField>
             <Label text="port">
                 <font>
-                    <Font name="Arial" size="16"></Font>
+                    <Font name="Rockwell" size="16"></Font>
                 </font>
             </Label>
             <TextField fx:id="portField" text=""></TextField>
             <Label text="database">
                 <font>
-                    <Font name="Arial" size="16"></Font>
+                    <Font name="Rockwell" size="16"></Font>
                 </font>
             </Label>
             <TextField fx:id="databaseField" text=""></TextField>
@@ -60,12 +60,21 @@
         </Button>
         <Label fx:id="bannerError" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="1">
             <font>
-                <Font name="Arial" size="10"></Font>
+                <Font name="Rockwell" size="10"></Font>
             </font>
         </Label>
     </GridPane>
 
     <BorderPane fx:id="panelLeft" GridPane.columnIndex="0" GridPane.rowIndex="1">
+        <top>
+            <VBox fx:id="collection" alignment="CENTER">
+                <Label text="Collection">
+                    <font>
+                        <Font name="Rockwell" size="20"></Font>
+                    </font>
+                </Label>
+            </VBox>
+        </top>
         <center>
             <VBox fx:id="test" BorderPane.alignment="CENTER" visible="false"></VBox>
         </center>
@@ -76,9 +85,10 @@
 
     <BorderPane fx:id="nothing" GridPane.columnIndex="1" GridPane.rowIndex="1" visible="true">
         <center>
+
             <Label fx:id="nothingLabel" text="Connect to Mongo database and explore it.">
                 <font>
-                    <Font name="Arial" size="18"></Font>
+                    <Font name="Rockwell" size="18"></Font>
                 </font>
             </Label>
         </center>

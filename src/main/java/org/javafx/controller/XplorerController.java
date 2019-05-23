@@ -3,10 +3,14 @@ package org.javafx.controller;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import org.apache.commons.lang3.StringUtils;
 import org.javafx.process.MongoProcess;
 
 import java.util.List;
@@ -47,6 +51,26 @@ public class XplorerController {
 
     @FXML
     protected void connect(ActionEvent event) {
+        this.checkInput();
+
+        //this.visualize.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+        this.mongoProcess = new MongoProcess(this.hostField.getText(), Integer.parseInt(this.portField.getText()), this.databaseField.getText());
+        this.nothingLabel.setText("Select a collection on the left to see the content.");
+
+        List<String> collectionsNames = this.mongoProcess.getAllCollectionNames();
+
+        for(String collectionName: collectionsNames) {
+            displayCollection(collectionName);
+        }
+        this.test.setVisible(true);
+    }
+
+    @FXML
+    protected void exit(ActionEvent event) {
+        Platform.exit();
+    }
+
+    private void checkInput() {
         this.bannerError.setVisible(false);
         if(this.hostField.getText().isEmpty()) {
             //showAlert("The Host is empty !");
@@ -62,54 +86,19 @@ public class XplorerController {
             return;
         }
 
+        if(!StringUtils.isNumeric(this.portField.getText())) {
+            this.bannerError.setText("The Port must be numeric !");
+            this.bannerError.setVisible(true);
+            return;
+        }
+
+
         if(this.databaseField.getText().isEmpty()) {
             //showAlert("The Port is empty !");
             this.bannerError.setText("The Database name is empty !");
             this.bannerError.setVisible(true);
             return;
         }
-
-
-        //this.visualize.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-        this.mongoProcess = new MongoProcess(this.hostField.getText(), Integer.parseInt(this.portField.getText()), this.databaseField.getText());
-        this.nothingLabel.setText("Select a collection on the left to see the content.");
-
-        List<String> collectionsNames = this.mongoProcess.getAllCollectionNames();
-
-        for(String collectionName: collectionsNames) {
-            Label label = new Label(collectionName);
-            label.setOnMouseClicked(clickEvent -> {
-                this.visualize.clear();
-                List<String> documents = this.mongoProcess.getAllEntriesOfCollection(label.getText());
-                System.out.println("nb documents " + documents.size());
-                if(documents.size() > 0) {
-                    for(String document: documents) {
-                        this.visualize.setText(document + "\n");
-                    }
-
-                    this.visualize.setVisible(true);
-                    this.nothing.setVisible(false);
-                } else {
-                    this.visualize.setVisible(false);
-                    this.nothing.setVisible(true);
-                    this.nothingLabel.setText("This collection is empty !");
-                }
-
-
-            });
-
-            this.test.getChildren().add(label);
-        }
-        this.test.setVisible(true);
-
-
-        //Region contentTextArea = (Region) this.visualize.lookup(".content");
-        //contentTextArea.setStyle("-fx-background-color: white;");
-    }
-
-    @FXML
-    protected void exit(ActionEvent event) {
-        Platform.exit();
     }
 
     private void showAlert(String message) {
@@ -119,6 +108,47 @@ public class XplorerController {
         alert.setContentText(message);
         //alert.initOwner(this.btnConnect.getScene().getWindow());
         alert.showAndWait();
+    }
+
+    private void displayCollection(String collectionName) {
+        Label label = new Label(collectionName);
+        label.setFont(new Font(18));
+        label.setId("collectionName");
+        label.setOnMouseClicked(clickEvent -> {
+            this.resetActiveCollection();
+            label.setStyle("-fx-text-fill: #5E5A80;");
+            this.visualize.clear();
+            List<String> documents = this.mongoProcess.getAllEntriesOfCollection(label.getText());
+            System.out.println("nb documents " + documents.size());
+            if(documents.size() > 0) {
+                for(String document: documents) {
+                    this.visualize.setText(document + "\n");
+                }
+
+                this.visualize.setVisible(true);
+                this.nothing.setVisible(false);
+            } else {
+                this.visualize.setVisible(false);
+                this.nothing.setVisible(true);
+                this.nothingLabel.setText("This collection is empty !");
+            }
+
+
+        });
+
+        VBox vbox = new VBox();
+        vbox.getChildren().addAll(label);
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setSpacing(20);
+        this.test.getChildren().add(vbox);
+    }
+
+    private void resetActiveCollection() {
+        for(Node vb: this.test.getChildren()) {
+            VBox vbox = (VBox) vb;
+            for(Node label: vbox.getChildren())
+                label.setStyle("-fx-text-fill: white;");
+        }
     }
 
     private String renderJson(String json) {
