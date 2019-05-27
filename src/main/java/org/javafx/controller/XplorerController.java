@@ -7,12 +7,15 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import org.apache.commons.lang3.StringUtils;
 import org.javafx.process.MongoProcess;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class XplorerController {
@@ -73,14 +76,14 @@ public class XplorerController {
     private void checkInput() {
         this.bannerError.setVisible(false);
         if(this.hostField.getText().isEmpty()) {
-            //showAlert("The Host is empty !");
+            this.showAlert("The Host is empty !");
             this.bannerError.setText("The Host is empty !");
             this.bannerError.setVisible(true);
             return;
         }
 
         if(this.portField.getText().isEmpty()) {
-            //showAlert("The Port is empty !");
+            this.showAlert("The Port is empty !");
             this.bannerError.setText("The Port is empty !");
             this.bannerError.setVisible(true);
             return;
@@ -94,7 +97,7 @@ public class XplorerController {
 
 
         if(this.databaseField.getText().isEmpty()) {
-            //showAlert("The Port is empty !");
+            this.showAlert("The Port is empty !");
             this.bannerError.setText("The Database name is empty !");
             this.bannerError.setVisible(true);
             return;
@@ -106,7 +109,6 @@ public class XplorerController {
         alert.setTitle("Form Error !");
         alert.setHeaderText(null);
         alert.setContentText(message);
-        //alert.initOwner(this.btnConnect.getScene().getWindow());
         alert.showAndWait();
     }
 
@@ -122,6 +124,7 @@ public class XplorerController {
             System.out.println("nb documents " + documents.size());
             if(documents.size() > 0) {
                 for(String document: documents) {
+                    this.renderJsonObject(document);
                     this.visualize.setText(document + "\n");
                 }
 
@@ -151,35 +154,20 @@ public class XplorerController {
         }
     }
 
-    private String renderJson(String json) {
-        int openBracket = 0;
-        int closeBracket = 0;
-        String newJson = "";
+    private void renderJsonObject(String json){
+        JSONParser parser = new JSONParser();
 
-        for(int i = 0; i < json.length(); i ++) {
-            if('{' == json.charAt(i) || '[' == json.charAt(i)) {
-                openBracket ++;
-                newJson = newJson + json.charAt(i) + "\n";
-                for(int j = 0; j < openBracket; j++ ) {
-                    newJson = newJson + "\t";
-                }
-            } else if('}' == json.charAt(i) || ']' == json.charAt(i)) {
-                newJson = newJson + "\n";
-                openBracket --;
-                for(int j = 0; j < openBracket; j++ ) {
-                    newJson = newJson + "\t";
-                }
-                newJson = newJson + json.charAt(i);
-            } else if( ',' == json.charAt(i)) {
-                newJson = newJson + ",\n";
-                for(int j = 0; j < openBracket; j++ ) {
-                    newJson = newJson + "\t";
-                }
-            } else {
-                newJson = newJson + json.charAt(i);
+        try {
+            Object obj = parser.parse(json);
+            JSONObject jsonObject = (JSONObject) obj;
+            System.out.println("size : "+ jsonObject.keySet().size());
+            for(Iterator iterator = jsonObject.keySet().iterator(); iterator.hasNext();) {
+                String key = (String) iterator.next();
+                System.out.println("key : "+ key + " | " + jsonObject.get(key));
             }
+        } catch (ParseException e) {
+            System.out.println("Error");
         }
-
-        return newJson;
     }
+
 }
