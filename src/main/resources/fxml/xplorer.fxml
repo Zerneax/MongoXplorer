@@ -48,7 +48,8 @@
                 </font>
             </Label>
             <TextField fx:id="databaseField" text=""></TextField>
-            <Button fx:id="btnConnect" text="connect" onAction="#connect"></Button>
+            <Button fx:id="btnConnect" text="connect" visible="true" onAction="#connect"></Button>
+            <Button fx:id="btnDisconnect" text="disconnect" visible="false" onAction="#disconnect"></Button>
             <padding>
                 <Insets top="5"></Insets>
             </padding>
@@ -86,7 +87,6 @@
 
     <BorderPane fx:id="nothing" GridPane.columnIndex="1" GridPane.rowIndex="1" visible="true">
         <center>
-
             <Label fx:id="nothingLabel" text="Connect to Mongo database and explore it.">
                 <font>
                     <Font name="Rockwell" size="18"></Font>
@@ -96,7 +96,7 @@
     </BorderPane>
 
     <TableView fx:id="visualize" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" visible="false">
-
+        <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
     </TableView>
     <!--<TextArea fx:id="visualize" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" visible="false">
         <GridPane.margin>

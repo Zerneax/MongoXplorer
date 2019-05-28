@@ -39,4 +39,8 @@ public class MongoProcess {
 
         return documents;
     }
+
+    public void disconnect() {
+        this.mongoClient.close();
+    }
 }

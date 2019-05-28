@@ -1,27 +1,22 @@
 package org.javafx.controller;
 
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import org.apache.commons.lang3.StringUtils;
 import org.javafx.process.MongoProcess;
 import org.javafx.process.UiProcess;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class XplorerController {
@@ -39,6 +34,9 @@ public class XplorerController {
 
     @FXML
     private Button btnConnect;
+
+    @FXML
+    private Button btnDisconnect;
 
     @FXML
     private Button btnExit;
@@ -79,6 +77,35 @@ public class XplorerController {
             displayCollection(collectionName);
         }
         this.test.setVisible(true);
+        this.btnConnect.setVisible(false);
+        this.btnDisconnect.setVisible(true);
+    }
+
+    @FXML
+    protected void disconnect(ActionEvent event) {
+        this.mongoProcess.disconnect();
+
+        // clear input value
+        //this.hostField.clear();
+        //this.portField.clear();
+        //this.databaseField.clear();
+
+        // clear left panel
+        this.test.getChildren().clear();
+
+        // clear tableview
+        this.visualize.getItems().clear();
+        this.visualize.getColumns().clear();
+        this.visualize.refresh();
+        this.visualize.setVisible(false);
+
+        // display standard view
+        this.nothing.setVisible(true);
+        this.nothingLabel.setVisible(true);
+        this.nothingLabel.setText("Connect to Mongo database and explore it.");
+
+        this.btnConnect.setVisible(true);
+        this.btnDisconnect.setVisible(false);
     }
 
     @FXML
@@ -124,7 +151,6 @@ public class XplorerController {
             this.resetActiveCollection();
             label.setStyle("-fx-text-fill: #5E5A80;");
             List<String> documents = this.mongoProcess.getAllEntriesOfCollection(label.getText());
-            System.out.println("nb documents " + documents.size());
             if(documents.size() > 0) {
                 this.visualize.setItems(this.uiProcess.insertValueInTableView(documents, this.visualize));
                 this.visualize.setVisible(true);

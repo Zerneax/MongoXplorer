@@ -43,16 +43,19 @@ public class UiProcess {
         JSONParser parser = new JSONParser();
         try {
             JSONObject jsonObject = (JSONObject) parser.parse(json);
-
+            int numberOfColumns = jsonObject.keySet().size();
             int i = 0;
             for(Iterator iterator = jsonObject.keySet().iterator(); iterator.hasNext(); i ++) {
+
                 String key = (String) iterator.next();
                 TableColumn<List<StringProperty>, String> column = new TableColumn<>(key);
+                column.setPrefWidth(tableView.getWidth() / numberOfColumns);
                 final int j = i;
 
                 column.setCellValueFactory(data -> data.getValue().get(j));//
                 tableView.getColumns().add(column);
             }
+
         } catch (ParseException e) {
             this.showAlert("An error occured !");
         }
