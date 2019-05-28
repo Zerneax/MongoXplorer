@@ -1,6 +1,10 @@
 package org.javafx.controller;
 
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -11,14 +15,18 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import org.apache.commons.lang3.StringUtils;
 import org.javafx.process.MongoProcess;
+import org.javafx.process.UiProcess;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class XplorerController {
+
+    private UiProcess uiProcess;
 
     @FXML
     private TextField hostField;
@@ -42,7 +50,7 @@ public class XplorerController {
     private VBox test;
 
     @FXML
-    private TextArea visualize;
+    private TableView<List<StringProperty>> visualize;
 
     @FXML
     private BorderPane nothing;
@@ -52,11 +60,16 @@ public class XplorerController {
 
     private MongoProcess mongoProcess;
 
+    public XplorerController() {
+        this.uiProcess = new UiProcess();
+        this.mongoProcess = null;
+    }
+
     @FXML
     protected void connect(ActionEvent event) {
-        this.checkInput();
+        if(this.checkInput())
+            return;
 
-        //this.visualize.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         this.mongoProcess = new MongoProcess(this.hostField.getText(), Integer.parseInt(this.portField.getText()), this.databaseField.getText());
         this.nothingLabel.setText("Select a collection on the left to see the content.");
 
@@ -73,43 +86,34 @@ public class XplorerController {
         Platform.exit();
     }
 
-    private void checkInput() {
+    private boolean checkInput() {
         this.bannerError.setVisible(false);
         if(this.hostField.getText().isEmpty()) {
-            this.showAlert("The Host is empty !");
             this.bannerError.setText("The Host is empty !");
             this.bannerError.setVisible(true);
-            return;
+            return true;
         }
 
         if(this.portField.getText().isEmpty()) {
-            this.showAlert("The Port is empty !");
             this.bannerError.setText("The Port is empty !");
             this.bannerError.setVisible(true);
-            return;
+            return true;
         }
 
         if(!StringUtils.isNumeric(this.portField.getText())) {
             this.bannerError.setText("The Port must be numeric !");
             this.bannerError.setVisible(true);
-            return;
+            return true;
         }
 
 
         if(this.databaseField.getText().isEmpty()) {
-            this.showAlert("The Port is empty !");
             this.bannerError.setText("The Database name is empty !");
             this.bannerError.setVisible(true);
-            return;
+            return true;
         }
-    }
 
-    private void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Form Error !");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+        return false;
     }
 
     private void displayCollection(String collectionName) {
@@ -119,15 +123,10 @@ public class XplorerController {
         label.setOnMouseClicked(clickEvent -> {
             this.resetActiveCollection();
             label.setStyle("-fx-text-fill: #5E5A80;");
-            this.visualize.clear();
             List<String> documents = this.mongoProcess.getAllEntriesOfCollection(label.getText());
             System.out.println("nb documents " + documents.size());
             if(documents.size() > 0) {
-                for(String document: documents) {
-                    this.renderJsonObject(document);
-                    this.visualize.setText(document + "\n");
-                }
-
+                this.visualize.setItems(this.uiProcess.insertValueInTableView(documents, this.visualize));
                 this.visualize.setVisible(true);
                 this.nothing.setVisible(false);
             } else {
@@ -154,20 +153,8 @@ public class XplorerController {
         }
     }
 
-    private void renderJsonObject(String json){
-        JSONParser parser = new JSONParser();
 
-        try {
-            Object obj = parser.parse(json);
-            JSONObject jsonObject = (JSONObject) obj;
-            System.out.println("size : "+ jsonObject.keySet().size());
-            for(Iterator iterator = jsonObject.keySet().iterator(); iterator.hasNext();) {
-                String key = (String) iterator.next();
-                System.out.println("key : "+ key + " | " + jsonObject.get(key));
-            }
-        } catch (ParseException e) {
-            System.out.println("Error");
-        }
-    }
+
+
 
 }

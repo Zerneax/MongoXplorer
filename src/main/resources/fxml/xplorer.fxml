@@ -12,6 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.TableView?>
 <GridPane fx:id="gridpane" fx:controller="org.javafx.controller.XplorerController" xmlns:fx="http://javafx.com/fxml" gridLinesVisible="false">
     <columnConstraints>
         <ColumnConstraints percentWidth="20"></ColumnConstraints>
@@ -94,9 +95,12 @@
         </center>
     </BorderPane>
 
-    <TextArea fx:id="visualize" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" visible="false">
+    <TableView fx:id="visualize" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" visible="false">
+
+    </TableView>
+    <!--<TextArea fx:id="visualize" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" visible="false">
         <GridPane.margin>
             <Insets left="1" top="1"></Insets>
         </GridPane.margin>
-    </TextArea>
+    </TextArea>-->
 </GridPane>
