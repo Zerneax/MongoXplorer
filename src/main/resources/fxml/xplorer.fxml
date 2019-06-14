@@ -30,7 +30,7 @@
             <ColumnConstraints percentWidth="10"></ColumnConstraints>
         </columnConstraints>
         <HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="0">
-            <Label text="host">
+            <!--<Label text="host">
                 <font>
                     <Font name="Rockwell" size="16"></Font>
                 </font>
@@ -47,9 +47,11 @@
                     <Font name="Rockwell" size="16"></Font>
                 </font>
             </Label>
-            <TextField fx:id="databaseField" text=""></TextField>
-            <Button fx:id="btnConnect" text="connect" visible="true" onAction="#connect"></Button>
+            <TextField fx:id="databaseField" text=""></TextField>-->
+            <Button fx:id="btnConnect" text="Connect" visible="true" onAction="#openConnectWindow"></Button>
+            <!--<Button fx:id="btnConnect" text="connect" visible="true" onAction="#connect"></Button>-->
             <Button fx:id="btnDisconnect" text="disconnect" visible="false" onAction="#disconnect"></Button>
+
             <padding>
                 <Insets top="5"></Insets>
             </padding>
@@ -78,7 +80,7 @@
             </VBox>
         </top>
         <center>
-            <VBox fx:id="test" BorderPane.alignment="CENTER" visible="false"></VBox>
+            <VBox fx:id="collections" BorderPane.alignment="CENTER" visible="false"></VBox>
         </center>
         <padding>
             <Insets top="1" left="1" right="1" bottom="1"></Insets>

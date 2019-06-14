@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+<VBox fx:id="layout" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.javafx.controller.ConnectController"
+            prefHeight="200.0" prefWidth="260.0" >
+
+    <GridPane fx:id="banner" GridPane.columnIndex="0" GridPane.rowIndex="0">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="40" hgrow="ALWAYS"></ColumnConstraints>
+            <ColumnConstraints percentWidth="60" hgrow="ALWAYS"></ColumnConstraints>
+        </columnConstraints>
+
+
+        <HBox GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <Label text="Host">
+                <font>
+                    <Font name="Rockwell" size="16"></Font>
+                </font>
+                <padding>
+                    <Insets top="5" left="10"></Insets>
+                </padding>
+            </Label>
+        </HBox>
+        <HBox GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <TextField fx:id="hostField" text=""></TextField>
+            <padding>
+                <Insets top="5"></Insets>
+            </padding>
+        </HBox>
+
+
+        <HBox GridPane.columnIndex="0" GridPane.rowIndex="1">
+            <Label text="Port">
+                <font>
+                    <Font name="Rockwell" size="16"></Font>
+                </font>
+                <padding>
+                    <Insets top="5" left="10"></Insets>
+                </padding>
+            </Label>
+        </HBox>
+        <HBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="portField" text=""></TextField>
+            <padding>
+                <Insets top="5"></Insets>
+            </padding>
+        </HBox>
+
+        <HBox GridPane.columnIndex="0" GridPane.rowIndex="2">
+            <Label text="Database">
+                <font>
+                    <Font name="Rockwell" size="16"></Font>
+                </font>
+                <padding>
+                    <Insets top="5" left="10"></Insets>
+                </padding>
+            </Label>
+        </HBox>
+        <HBox GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <TextField fx:id="dbField" text=""></TextField>
+            <padding>
+                <Insets top="5"></Insets>
+            </padding>
+        </HBox>
+
+
+        <HBox GridPane.columnIndex="0" GridPane.rowIndex="3">
+            <Label text="User">
+                <font>
+                    <Font name="Rockwell" size="16"></Font>
+                </font>
+                <padding>
+                    <Insets top="5" left="10"></Insets>
+                </padding>
+            </Label>
+        </HBox>
+        <HBox GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <TextField fx:id="userField" text=""></TextField>
+            <padding>
+                <Insets top="5"></Insets>
+            </padding>
+        </HBox>
+
+        <HBox GridPane.columnIndex="0" GridPane.rowIndex="4">
+            <Label text="Password">
+                <font>
+                    <Font name="Rockwell" size="16"></Font>
+                </font>
+                <padding>
+                    <Insets top="5" left="10"></Insets>
+                </padding>
+            </Label>
+        </HBox>
+        <HBox GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <TextField fx:id="passwordField" text=""></TextField>
+            <padding>
+                <Insets top="5"></Insets>
+            </padding>
+        </HBox>
+
+        <Label fx:id="bannerError" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.columnSpan="2">
+            <font>
+                <Font name="Rockwell" size="10"></Font>
+            </font>
+        </Label>
+
+        <HBox alignment="CENTER" spacing="50" GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.columnSpan="2">
+            <Button fx:id="btnConnect" text="connect" visible="true" alignment="CENTER" onAction="#connect"></Button>
+            <padding>
+                <Insets top="10"></Insets>
+            </padding>
+        </HBox>
+    </GridPane>
+</VBox>

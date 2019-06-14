@@ -2,6 +2,7 @@ package org.javafx.process;
 
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -17,6 +18,13 @@ public class MongoProcess {
 
     public MongoProcess(String host, int port, String database) {
         this.mongoClient = new MongoClient(host, port);
+        //new MongoClientURI( "mongodb://xplorerAdmin:admin@localhost:27017/xplorer" )
+        this.mongoDatabase = this.mongoClient.getDatabase(database);
+    }
+
+    public MongoProcess(String mongoUri, String database) {
+        System.out.println("mongoUri : " + mongoUri);
+        this.mongoClient = new MongoClient(new MongoClientURI( mongoUri ));
         this.mongoDatabase = this.mongoClient.getDatabase(database);
     }
 
